@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import * as Font from 'expo-font';
+import React, { useState, useEffect } from "react";
+import * as Font from "expo-font";
 import {
   StyleSheet,
   Text,
   View,
   ActivityIndicator,
   StatusBar,
-} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Tabs from './navigation/Tabs';
-import { Featured, EventDetail } from './screens';
-import { customFonts } from './constants';
+} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Tabs from "./navigation/Tabs";
+import { Featured, EventDetail } from "./screens";
+import { customFonts } from "./constants";
 
 const Stack = createStackNavigator();
 
@@ -37,7 +37,7 @@ export default function App() {
         }}
         initialRouteName="Featured"
       >
-        <Stack.Screen name="Featured" component={Tabs} />
+        <Stack.Screen name="Featured" component={Featured} />
         <Stack.Screen name="EventDetail" component={EventDetail} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -49,8 +49,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
