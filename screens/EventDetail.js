@@ -22,7 +22,9 @@ import {
   Platform,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
+import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 import moment from "moment";
 import { dummyData, FONTS, SIZES, COLORS, icons, images } from "../constants";
@@ -30,7 +32,8 @@ import { McText, McIcon, McAvatar } from "../components";
 import { Button } from "react-native-web";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 
-const EventDetail = ({ navigation, route }) => {
+const EventDetail = ({ route }) => {
+  const navigation = useNavigation();
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
@@ -117,7 +120,16 @@ const EventDetail = ({ navigation, route }) => {
                     <McText h1>{selectedEvent?.title}</McText>
                     <McText body5 style={{ opacity: 0.5, letterSpacing: 1.5 }}>
                       STARTING{" "}
-                      {moment(selectedEvent?.startingTime).format("hh:mm A")}
+                      {/* {moment(
+                        selectedEvent?.startingTime,
+                        "YYYY/MM/DD hh:mm A"
+                      ).format("hh:mm A")} */}
+                      {/* {moment(selectedEvent?.startingTime).format("hh:mm A")} */}
+                      {selectedEvent?.startingTime &&
+                        moment(
+                          selectedEvent.startingTime,
+                          "YYYY/MM/DD hh:mm A"
+                        ).format("hh:mm A")}
                     </McText>
                   </View>
                   <LinearGradient
@@ -133,12 +145,12 @@ const EventDetail = ({ navigation, route }) => {
                     }}
                   >
                     <McText body4 style={{ letterSpacing: 1 }}>
-                      {moment(selectedEvent?.startingTime)
+                      {moment(selectedEvent?.startingTime, "YYYY/MM/DD hh:mm A")
                         .format("MMM")
                         .toUpperCase()}
                     </McText>
                     <McText h2 style={{}}>
-                      {moment(selectedEvent?.startingTime)
+                      {moment(selectedEvent?.startingTime, "YYYY/MM/DD hh:mm A")
                         .format("DD")
                         .toUpperCase()}
                     </McText>
@@ -189,15 +201,17 @@ const EventDetail = ({ navigation, route }) => {
           <McText h3>LOCATION</McText>
           <View
             style={{
-              height: 250,
+              flex: 1,
+              borderRadius: 30,
+              overflow: "hidden",
+              height: 300,
+              marginTop: 20,
             }}
           >
             <MapView
               provider={PROVIDER_GOOGLE}
               style={{
-                height: 250,
-                borderRadius: 15,
-                marginTop: 20,
+                height: "100%",
               }}
               minZoomLevel={15}
               initialRegion={dummyData.Region}
@@ -214,7 +228,7 @@ const EventDetail = ({ navigation, route }) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            marginHorizontal: 30,
+            marginHorizontal: 20,
           }}
         >
           <View>
@@ -300,7 +314,7 @@ const LocationSection = styled.View`
 `;
 
 const BottomBarSection = styled.View`
-  height: 130px;
+  height: 105px;
   width: ${SIZES.width + "px"};
   border-radius: ${SIZES.radius};
   background-color: ${COLORS.tabBar};
