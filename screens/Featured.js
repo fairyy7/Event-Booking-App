@@ -1,5 +1,5 @@
 /**
- * React Native Event Booking App UI - Featured Screnn
+ * React Native Event Booking App UI - Featured Screen
  * -> The screen can be seperated 4 sections
  *
  * TODO:
@@ -21,12 +21,15 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import moment from "moment";
 import { dummyData, FONTS, SIZES, COLORS, icons, images } from "../constants";
 import { McText, McIcon, McAvatar } from "../components";
 
-const Featured = ({ navigation }) => {
+const Featured = () => {
+  const navigation = useNavigation();
+
   const _renderItem = ({ item, index }) => {
     return (
       <TouchableWithoutFeedback
@@ -43,7 +46,7 @@ const Featured = ({ navigation }) => {
           <ImageBackground
             source={item.image}
             resizeMode="cover"
-            borderRadius={SIZES.radius}
+            borderRadius={parseFloat(SIZES.radius)}
             style={{
               width: SIZES.width / 2 + 70,
               height: SIZES.width / 2 + 70,
@@ -59,10 +62,12 @@ const Featured = ({ navigation }) => {
             >
               <DateBox>
                 <McText body5 color={COLORS.black}>
-                  {moment(item.startingTime).format("MMM").toUpperCase()}
+                  {moment(item.startingTime, "YYYY/MM/DD hh:mm A")
+                    .format("MMM")
+                    .toUpperCase()}
                 </McText>
                 <McText h2 color={COLORS.black}>
-                  {moment(item.startingtime).format("DD")}
+                  {moment(item.startingTime, "YYYY/MM/DD hh:mm A").format("DD")}
                 </McText>
               </DateBox>
             </View>
@@ -129,7 +134,7 @@ const Featured = ({ navigation }) => {
         style={{
           height: 120,
           marginHorizontal: 30,
-          borderRadius: SIZES.radius,
+          borderRadius: parseFloat(SIZES.radius),
           justifyContent: "center",
           alignItems: "center",
         }}
